@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>root recomm system</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body>
+    <div class="container">
+        <img id="map" src="{{ url_for('static', filename='images/basic1.png') }}" width="600px">
+        <div class="main">
+        </div>
+        <div id="test">좌표를 입력해 주십시오</div>
+        <div id="xc">x</div>
+        <div id="yc">y</div>
+        <br>
+        <tr><td>x좌표: <input name="phrase" type="text" id="x" value="" size="10"> <br></td></tr>
+        <tr><td>y좌표: <input name="letters" type="text" id="y" value="" size="10"> <br></td></tr>
+        <input type="button" class="button1" value="send data" onclick="submit()"><br>
+        <canvas id="myCanvas0" width="100" height="100" ></canvas>
+        <canvas id="myCanvas1" width="100" height="100" ></canvas>
+        <canvas id="myCanvas2" width="100" height="100" ></canvas>
+        <canvas id="myCanvas3" width="100" height="100" ></canvas>
+        <canvas id="myCanvas4" width="100" height="100"></canvas>
+        <canvas id="myCanvas5" width="100" height="100"></canvas>
+        <canvas id="myCanvas_arrow0" width="100" height="100"></canvas>
+        <canvas id="myCanvas_arrow1" width="100" height="100"></canvas>
+        <canvas id="myCanvas_arrow2" width="100" height="100"></canvas>
+        <canvas id="myCanvas_arrow3" width="100" height="100"></canvas>
+        <canvas id="myCanvas_arrow4" width="100" height="100"></canvas>
+        <canvas id="myCanvas_arrow5" width="100" height="100"></canvas>
+        <canvas id="myCanvas_arrow6" width="100" height="100"></canvas>
+        <div id="nodeNumber0"></div>
+        <div id="nodeNumber1"></div>
+        <div id="nodeNumber2"></div>
+        <div id="nodeNumber3"></div>
+        <div id="nodeNumber4"></div>
+        <div id="nodeNumber5"></div>
+    </div>
+    <style>
+        .rectangle {
+            width: 200px;
+            height: 100px;
+            background-color: blue;
+        }
+    </style>
+
+    <script>
+        const staticBaseUrl = "{{ url_for('static', filename='images/') }}";
+
+        function submit(){
+            clearAll()
+            test.innerHTML = "<h4>입력 받은 좌표는 아래와 같습니다</h4>";
+            let xc = parseInt(document.getElementById("x").value);
+            let yc = parseInt(document.getElementById("y").value);
+            document.getElementById("xc").innerHTML = "x좌표 : "+xc;
+            document.getElementById("yc").innerHTML = "y좌표 : "+yc;
+            sendData(String(xc), String(yc))
+        }
+
+        function sendData(user_x, user_y) {
+            // var inputText = document.getElementById("inputText").value
+            var xhr = new XMLHttpRequest();
+            xhr.open("POST", "/process_text", true);
+            xhr.setRequestHeader('Content-Type', 'application/json');
+            xhr.send(JSON.stringify({x: user_x, y: user_y}));
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState == 4 && xhr.status == 200) {
+                    var data = parseStringData(xhr.responseText);
+                    var nodes = data[0]
+                    var user_node = data[1]
+                    var arrow = data[2]
+
+                    drawUserNodeImage(user_node)
+                    drawArrow(arrow[0], arrow[1])
+
+                    for(const key in nodes) {
+                        drawImage(key, nodes[key])
+                    }
+                }
+            };
+        }
+
+        function parseStringData(input) {
+            var part = input.split('|');
+
+            var pairs = part[0].split(' ');
+
+            var nodes = {};
+            for(let i = 0; i < pairs.length; i += 2) {
+                var id = pairs[i];
+                var traffic = pairs[i+1];
+                nodes[id] = traffic;
+            }
+
+            var user_node = part[1]
+
+            var arrow = part[2].split(' ')
+
+            return [nodes, user_node, arrow];
+        }
+
+        function drawImage(key, traffic) {
+            document.getElementById('nodeNumber' + key).innerHTML = traffic;
+
+            var canvas = document.getElementById('myCanvas' + key);
+            var ctx = canvas.getContext('2d');
+
+            var img = new Image();
+            img.onload = function() {
+                var scale = Math.min(canvas.width / img.width, canvas.height / img.height);
+                var imgWidth = img.width * scale;
+                var imgHeight = img.height * scale;
+
+                var x = (canvas.width - imgWidth) / 2;
+                var y = (canvas.height - imgHeight) / 2;
+
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                ctx.drawImage(img, x, y, imgWidth, imgHeight);
+            };
+            // img.src = "{{ url_for('static', filename='images/node1.png') }}";
+            key = parseInt(key) + 1;
+            img.src = staticBaseUrl + 'node' + key + '.png';
+        }
+
+        function drawUserNodeImage(key) {
+            var canvas = document.getElementById('myCanvas' + key);
+            var ctx = canvas.getContext('2d');
+
+            var img = new Image();
+            img.onload = function() {
+                var scale = Math.min(canvas.width / img.width, canvas.height / img.height);
+                var imgWidth = img.width * scale;
+                var imgHeight = img.height * scale;
+
+                var x = (canvas.width - imgWidth) / 2;
+                var y = (canvas.height - imgHeight) / 2;
+
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                ctx.drawImage(img, x, y, imgWidth, imgHeight);
+            };
+            img.src = "{{ url_for('static', filename='images/user_node.png') }}";
+        }
+
+        function drawArrow(key, direction) {
+            var canvas = document.getElementById('myCanvas_arrow' + key);
+            var ctx = canvas.getContext('2d');
+
+            var img = new Image();
+            img.onload = function() {
+                var scale = Math.min(canvas.width / img.width, canvas.height / img.height);
+                var imgWidth = img.width * scale;
+                var imgHeight = img.height * scale;
+
+                var x = (canvas.width - imgWidth) / 2;
+                var y = (canvas.height - imgHeight) / 2;
+
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                ctx.drawImage(img, x, y, imgWidth, imgHeight);
+            };
+            // img.src = "{{ url_for('static', filename='images/up.png') }}";
+            img.src = staticBaseUrl + direction + '.png';
+        }
+
+        function clearAll() {
+            for(let i = 0; i < 6; i++) {
+                var canvas = document.getElementById('myCanvas' + i);
+                var ctx = canvas.getContext('2d');
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+            }
+
+            for(let i = 0; i < 7; i++) {
+                var canvas = document.getElementById('myCanvas_arrow' + i);
+                var ctx = canvas.getContext('2d');
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+            }
+
+            for(let i = 0; i < 6; i++) {
+                document.getElementById('nodeNumber' + i).innerHTML = "";
+            }
+        }
+    </script>
+</body>
+</html>

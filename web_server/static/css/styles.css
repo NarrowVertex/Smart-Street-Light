@@ -1,0 +1,174 @@
+body{
+    background-image: url(/001.jpeg);
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+    height: 100%;
+}
+.header{
+    color: rgb(247, 243, 243) ;
+    text-align: center;
+    margin: 50px auto;
+    width:150px;
+    height: 35px;
+}
+.container{
+    background-color: #00000068;
+    margin: 50px auto;
+    width:1000px;
+    height: 1000px;
+    text-align: center;
+}
+
+#map{
+    border: solid 5px  black;
+    margin: 50px auto;
+}
+
+.button1 {
+    background-color:#0a0a23;
+    color: #fff;
+    border:none;
+    border-radius:10px;
+    padding:15px;
+    min-height:10px;
+    min-width: 40px;
+}
+.button:hover {
+    background-color:#002ead;
+    transition: 0.7s;
+}
+#myCanvas0{
+    position: absolute;
+    top: 160px;
+    left: 370px;
+    width: 100px;
+    height: 100px;
+}
+#myCanvas1{
+  position: absolute;
+  top: 160px;
+  left: 560px;
+  width: 100px;
+  height: 100px;
+}
+#myCanvas2{
+  position: absolute;
+  top: 160px;
+  left: 760px;
+  width: 100px;
+  height: 100px;
+}
+#myCanvas3{
+  position: absolute;
+  top: 360px;
+  left: 360px;
+  width: 100px;
+  height: 100px;
+}
+#myCanvas4{
+  position: absolute;
+  top: 360px;
+  left: 560px;
+  width: 100px;
+  height: 100px;
+}
+#myCanvas5{
+  position: absolute;
+  top: 360px;
+  left: 760px;
+  width: 100px;
+  height: 100px;
+}
+#nodeNumber0{
+    position: absolute;
+    top: 160px;
+    left: 370px;
+    width: 100px;
+    height: 100px;
+}
+#nodeNumber1{
+  position: absolute;
+  top: 160px;
+  left: 560px;
+  width: 100px;
+  height: 100px;
+}
+#nodeNumber2{
+  position: absolute;
+  top: 160px;
+  left: 760px;
+  width: 100px;
+  height: 100px;
+}
+#nodeNumber3{
+  position: absolute;
+  top: 360px;
+  left: 360px;
+  width: 100px;
+  height: 100px;
+}
+#nodeNumber4{
+  position: absolute;
+  top: 360px;
+  left: 560px;
+  width: 100px;
+  height: 100px;
+}
+#nodeNumber5{
+  position: absolute;
+  top: 360px;
+  left: 760px;
+  width: 100px;
+  height: 100px;
+}
+#myCanvas_arrow0{
+  position: absolute;
+  top: 160px;
+  left: 480px;
+  width: 100px;
+  height: 100px;
+}
+#myCanvas_arrow1{
+  position: absolute;
+  top: 160px;
+  left: 670px;
+  width: 100px;
+  height: 100px;
+}
+#myCanvas_arrow2{
+  position: absolute;
+  top: 270px;
+  left: 370px;
+  width: 100px;
+  height: 100px;
+}
+#myCanvas_arrow3{
+  position: absolute;
+  top: 270px;
+  left: 560px;
+  width: 100px;
+  height: 100px;
+}
+#myCanvas_arrow4{
+  position: absolute;
+  top: 270px;
+  left: 760px;
+  width: 100px;
+  height: 100px;
+}
+#myCanvas_arrow5{
+  position: absolute;
+  top: 360px;
+  left: 480px;
+  width: 100px;
+  height: 100px;
+}
+#myCanvas_arrow6{
+  position: absolute;
+  top: 360px;
+  left: 670px;
+  width: 100px;
+  height: 100px;
+}
